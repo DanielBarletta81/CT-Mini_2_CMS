@@ -38,12 +38,13 @@ def edit_contact():
             print(f'{field.capitalize()} : {value}')
 
      elif updated_field == "phone":
-         update_phone = input(f'Enter the phone number you want on this account. ')
-         contact_information[identifier_phone].update({"phone": update_phone})
+         update_phone = int(input(f'Enter the phone number you want on this account. '))
+         contact_information[identifier_phone].update({"phone": update_phone})  
          print(f'Contact {updated_field}, has been updated to : {update_phone}')
          print(f'\n Contact details after update:')
          for field, value in contact_information[identifier_phone].items():
             print(f'{field.capitalize()} : {value}')
+
 
      elif updated_field == "email":
          update_email = input(f'Enter the email you want on this account. ')
@@ -72,11 +73,15 @@ def delete_contact():
     del contact_information[identifier_phone]
     print(f'Contact: {identifier_phone} , has been deleted.')
     print(contact_information)
-#In Progress
+
+#Good
 def search_contacts():
      identifier_phone = int(input("Enter the phone number for the contact you wish to locate. "))
      if identifier_phone in contact_information:
-         print(f'\n Contact details for contact id: {identifier_phone} : {contact_information[identifier_phone]}', sep="\n")
+         for contact, info in contact_information.items():
+            print(f'\n Contact details for contact id: {identifier_phone}')
+            for key in info:
+                print( key.capitalize(), info[key], end="\n")
 #Good
 def display_contacts():
      for contact_id, info in contact_information.items():
