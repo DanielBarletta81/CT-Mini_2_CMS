@@ -15,7 +15,7 @@ contact_information = {
 
 def add_contact():
      add_name = input("Enter contact name: ")
-     add_phone = input("Enter contact phone #: ")
+     add_phone = int(input("Enter contact phone #: "))
      add_email = input("Enter contact email: ")
      add_city = input("Enter contact location (city): ")
 
@@ -63,9 +63,11 @@ def display_contacts():
      print(contact_information)
 
 def export_contacts():
+     #send contacts to text file
      pass
 
 def import_contacts():
+     #read contacts from a text file
      pass
 
 
