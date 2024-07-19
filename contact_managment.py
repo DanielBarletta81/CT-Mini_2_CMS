@@ -1,7 +1,7 @@
-#Implement the following actions in response to menu selections:
-#Adding a new contact with all relevant details.
+
 #Editing an existing contact's information (name, phone number, email, etc.).
 #Deleting a contact by searching for their unique identifier.
+
 #Searching for a contact by their unique identifier and displaying their details.
 #Displaying a list of all contacts with their unique identifiers.
 #Exporting contacts to a text file in a structured format.
@@ -13,6 +13,7 @@ contact_information = {
      4014199133: {"name": "Christie", "phone": 4014199133, "email": "cmajor890@gmail.com", "city": "Attleboro"}
      }
 
+#Good
 def add_contact():
      add_name = input("Enter contact name: ")
      add_phone = int(input("Enter contact phone #: "))
@@ -23,7 +24,7 @@ def add_contact():
      contact_information[add_phone] = new_contact
      print(f'New contact added: {new_contact}')
 
-
+# In Progress
 def edit_contact():
      identifier_phone = int(input("Enter the phone number for the contact you wish to edit. "))
      updated_field = input("Which would you like to update? (name/phone/email/city)")
@@ -31,41 +32,63 @@ def edit_contact():
      if updated_field == "name":
          update_name = input(f'Enter the name you want on this account. ')
          contact_information[identifier_phone].update({"name": update_name})
+         print(f'\n Contact {updated_field}, has been updated to : {update_name}')
+         print(f'\n Contact details after update:')
+         for field, value in contact_information[identifier_phone].items():
+            print(f'{field.capitalize()} : {value}')
 
      elif updated_field == "phone":
          update_phone = input(f'Enter the phone number you want on this account. ')
          contact_information[identifier_phone].update({"phone": update_phone})
+         print(f'Contact {updated_field}, has been updated to : {update_phone}')
+         print(f'\n Contact details after update:')
+         for field, value in contact_information[identifier_phone].items():
+            print(f'{field.capitalize()} : {value}')
 
      elif updated_field == "email":
          update_email = input(f'Enter the email you want on this account. ')
          contact_information[identifier_phone].update({"email": update_email})
+         print(f'Contact {updated_field}, has been updated to : {update_email}')
+         print(f'\n Contact details after update:')
+         for field, value in contact_information[identifier_phone].items():
+            print(f'{field.capitalize()} : {value}')
 
      elif updated_field == "city":
          update_city = input(f'Enter the city you want on this account. ')
          contact_information[identifier_phone].update({"city": update_city})
+         print(f'Contact {updated_field}, has been updated to : {update_city}')
+         print(f'\n Contact details after update:')
+         for field, value in contact_information[identifier_phone].items():
+            print(f'{field.capitalize()} : {value}')
 
      else:
          print("Please enter a valid field.")
 
      
 
-
+#Good
 def delete_contact():
     identifier_phone = int(input("Enter the phone number for the contact you wish to delete. "))
     del contact_information[identifier_phone]
     print(f'Contact: {identifier_phone} , has been deleted.')
     print(contact_information)
-
+#In Progress
 def search_contacts():
-     pass
-
+     identifier_phone = int(input("Enter the phone number for the contact you wish to locate. "))
+     if identifier_phone in contact_information:
+         print(f'\n Contact details for contact id: {identifier_phone} : {contact_information[identifier_phone]}', sep="\n")
+#Good
 def display_contacts():
-     print(contact_information)
-
+     for contact_id, info in contact_information.items():
+        print("\n Contact ID:", contact_id)
+        for key in info:
+            print(key + ':', info[key])
+     
+#Not Started
 def export_contacts():
      #send contacts to text file
      pass
-
+#Not Started
 def import_contacts():
      #read contacts from a text file
      pass
