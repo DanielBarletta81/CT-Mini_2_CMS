@@ -21,16 +21,40 @@ def add_contact():
 
      new_contact = {"name": add_name,  "phone": add_phone, "email": add_email, "city": add_city}
      contact_information[add_phone] = new_contact
-
-print(contact_information)
-add_contact()
+     print(f'New contact added: {new_contact}')
 
 
 def edit_contact():
-     pass
+     identifier_phone = int(input("Enter the phone number for the contact you wish to edit. "))
+     updated_field = input("Which would you like to update? (name/phone/email/city)")
+
+     if updated_field == "name":
+         update_name = input(f'Enter the name you want on this account. ')
+         contact_information[identifier_phone].update({"name": update_name})
+
+     elif updated_field == "phone":
+         update_phone = input(f'Enter the phone number you want on this account. ')
+         contact_information[identifier_phone].update({"phone": update_phone})
+
+     elif updated_field == "email":
+         update_email = input(f'Enter the email you want on this account. ')
+         contact_information[identifier_phone].update({"email": update_email})
+
+     elif updated_field == "city":
+         update_city = input(f'Enter the city you want on this account. ')
+         contact_information[identifier_phone].update({"city": update_city})
+
+     else:
+         print("Please enter a valid field.")
+
+     
+
 
 def delete_contact():
-     pass
+    identifier_phone = int(input("Enter the phone number for the contact you wish to delete. "))
+    del contact_information[identifier_phone]
+    print(f'Contact: {identifier_phone} , has been deleted.')
+    print(contact_information)
 
 def search_contacts():
      pass
@@ -67,13 +91,13 @@ def contact_management():
                 add_contact()
 
             elif selection == 2:
-                pass
+                edit_contact()
 
             elif selection == 3:
-                pass
+                delete_contact()
 
             elif selection == 4:
-                pass
+                search_contacts()
 
             elif selection == 5:
                 display_contacts()
