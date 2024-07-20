@@ -55,25 +55,31 @@ def edit_contact():
                 print(f'{field.capitalize()} : {value}')
 
         elif updated_field == "phone":
-
             update_phone = int(input(f'Enter the phone number you want on this account. '))
-            contact_information[identifier_phone].update({"phone": update_phone})  
-            print(f'Contact {updated_field}, has been updated to : {update_phone}')
-            print(f'\n Contact details after update:')
+            validPhone =  re.search(r"\d{10}", str(update_phone))
 
-            for field, value in contact_information[identifier_phone].items():
-                print(f'{field.capitalize()} : {value}')
+            if validPhone:
+
+                contact_information[identifier_phone].update({"phone": update_phone})  
+                print(f'Contact {updated_field}, has been updated to : {update_phone}')
+                print(f'\n Contact details after update:')
+
+                for field, value in contact_information[identifier_phone].items():
+                    print(f'{field.capitalize()} : {value}')
 
 
         elif updated_field == "email":
-
             update_email = input(f'Enter the email you want on this account. ')
-            contact_information[identifier_phone].update({"email": update_email})
-            print(f'Contact {updated_field}, has been updated to : {update_email}')
-            print(f'\n Contact details after update:')
+            isValidEmail = re.search(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}", update_email)
 
-            for field, value in contact_information[identifier_phone].items():
-                print(f'{field.capitalize()} : {value}')
+            if isValidEmail:
+
+                contact_information[identifier_phone].update({"email": update_email})
+                print(f'Contact {updated_field}, has been updated to : {update_email}')
+                print(f'\n Contact details after update:')
+
+                for field, value in contact_information[identifier_phone].items():
+                    print(f'{field.capitalize()} : {value}')
 
         elif updated_field == "city":
 
