@@ -1,4 +1,4 @@
-
+import re
 #Editing an existing contact's information (name, phone number, email, etc.).
 #Deleting a contact by searching for their unique identifier.
 
@@ -20,60 +20,90 @@ def add_contact():
      add_email = input("Enter contact email: ")
      add_city = input("Enter contact location (city): ")
 
-     new_contact = {"name": add_name,  "phone": add_phone, "email": add_email, "city": add_city}
-     contact_information[add_phone] = new_contact
-     print(f'New contact added: {new_contact}')
+     validPhone =  re.search(r"\d{10}", str(add_phone))
+     validEmail = re.search(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}", add_email)
+
+     if validPhone and validEmail:
+         
+         new_contact = {"name": add_name,  "phone": add_phone, "email": add_email, "city": add_city}
+         contact_information[add_phone] = new_contact
+     
+         print(f'New contact added: {new_contact}')
+
+     elif validPhone and not validEmail:
+         print("Please try entering email again, format was invalid.")
+     elif validEmail and not validPhone:
+         print("Please try entering phone again, digits only.")
+     else:
+         print("Both phone and email entries were invalid, please try again.")
 
 # In Progress
 def edit_contact():
-     identifier_phone = int(input("Enter the phone number for the contact you wish to edit. "))
-     updated_field = input("Which would you like to update? (name/phone/email/city)")
+     
+     try:
 
-     if updated_field == "name":
-         update_name = input(f'Enter the name you want on this account. ')
-         contact_information[identifier_phone].update({"name": update_name})
-         print(f'\n Contact {updated_field}, has been updated to : {update_name}')
-         print(f'\n Contact details after update:')
-         for field, value in contact_information[identifier_phone].items():
-            print(f'{field.capitalize()} : {value}')
+        identifier_phone = int(input("Enter the phone number for the contact you wish to edit. "))
+        updated_field = input("Which would you like to update? (name/phone/email/city)")
 
-     elif updated_field == "phone":
-         update_phone = int(input(f'Enter the phone number you want on this account. '))
-         contact_information[identifier_phone].update({"phone": update_phone})  
-         print(f'Contact {updated_field}, has been updated to : {update_phone}')
-         print(f'\n Contact details after update:')
-         for field, value in contact_information[identifier_phone].items():
-            print(f'{field.capitalize()} : {value}')
+        if updated_field == "name":
+            update_name = input(f'Enter the name you want on this account. ')
+            contact_information[identifier_phone].update({"name": update_name})
+            print(f'\n Contact {updated_field}, has been updated to : {update_name}')
+            print(f'\n Contact details after update:')
+
+            for field, value in contact_information[identifier_phone].items():
+                print(f'{field.capitalize()} : {value}')
+
+        elif updated_field == "phone":
+
+            update_phone = int(input(f'Enter the phone number you want on this account. '))
+            contact_information[identifier_phone].update({"phone": update_phone})  
+            print(f'Contact {updated_field}, has been updated to : {update_phone}')
+            print(f'\n Contact details after update:')
+
+            for field, value in contact_information[identifier_phone].items():
+                print(f'{field.capitalize()} : {value}')
 
 
-     elif updated_field == "email":
-         update_email = input(f'Enter the email you want on this account. ')
-         contact_information[identifier_phone].update({"email": update_email})
-         print(f'Contact {updated_field}, has been updated to : {update_email}')
-         print(f'\n Contact details after update:')
-         for field, value in contact_information[identifier_phone].items():
-            print(f'{field.capitalize()} : {value}')
+        elif updated_field == "email":
 
-     elif updated_field == "city":
-         update_city = input(f'Enter the city you want on this account. ')
-         contact_information[identifier_phone].update({"city": update_city})
-         print(f'Contact {updated_field}, has been updated to : {update_city}')
-         print(f'\n Contact details after update:')
-         for field, value in contact_information[identifier_phone].items():
-            print(f'{field.capitalize()} : {value}')
+            update_email = input(f'Enter the email you want on this account. ')
+            contact_information[identifier_phone].update({"email": update_email})
+            print(f'Contact {updated_field}, has been updated to : {update_email}')
+            print(f'\n Contact details after update:')
 
-     else:
-         print("Please enter a valid field.")
+            for field, value in contact_information[identifier_phone].items():
+                print(f'{field.capitalize()} : {value}')
+
+        elif updated_field == "city":
+
+            update_city = input(f'Enter the city you want on this account. ')
+            contact_information[identifier_phone].update({"city": update_city})
+            print(f'Contact {updated_field}, has been updated to : {update_city}')
+            print(f'\n Contact details after update:')
+
+            for field, value in contact_information[identifier_phone].items():
+                print(f'{field.capitalize()} : {value}')
+
+        else:
+           print("Please enter a valid field.")
+     except ValueError:
+            print(ValueError)
 
      
 
 #Good
 def delete_contact():
-    identifier_phone = int(input("Enter the phone number for the contact you wish to delete. "))
-    del contact_information[identifier_phone]
-    print(f'Contact: {identifier_phone} , has been deleted.')
-    print(contact_information)
 
+    try:
+    
+        identifier_phone = int(input("Enter the phone number for the contact you wish to delete. "))
+        del contact_information[identifier_phone]
+        print(f'Contact: {identifier_phone} , has been deleted.')
+        print(contact_information)
+
+    except ValueError:
+      print('A ValueError occurred')
 #Good
 def search_contacts():
      identifier_phone = int(input("Enter the phone number for the contact you wish to locate. "))
