@@ -15,29 +15,32 @@ contact_information = {
 
 #Good
 def add_contact():
-     add_name = input("Enter contact name: ")
-     add_phone = int(input("Enter contact phone #: "))
-     add_email = input("Enter contact email: ")
-     add_city = input("Enter contact location (city): ")
+     try:
+        add_name = input("Enter contact name: ")
+        add_phone = int(input("Enter contact phone #: "))
+        add_email = input("Enter contact email: ")
+        add_city = input("Enter contact location (city): ")
 
-     validPhone =  re.search(r"\d{10}", str(add_phone))
-     validEmail = re.search(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}", add_email)
+        validPhone =  re.search(r"\d{10}", str(add_phone))
+        validEmail = re.search(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}", add_email)
 
-     if validPhone and validEmail:
+        if validPhone and validEmail:
          
          new_contact = {"name": add_name,  "phone": add_phone, "email": add_email, "city": add_city}
          contact_information[add_phone] = new_contact
      
          print(f'New contact added: {new_contact}')
 
-     elif validPhone and not validEmail:
-         print("Please try entering email again, format was invalid.")
-     elif validEmail and not validPhone:
-         print("Please try entering phone again, digits only.")
-     else:
-         print("Both phone and email entries were invalid, please try again.")
+        elif validPhone and not validEmail:
+            print("Please try entering email again, format was invalid.")
+        elif validEmail and not validPhone:
+            print("Please try entering phone again, digits only.")
+        else:
+            print("Both phone and email entries were invalid, please try again.")
+     except ValueError | KeyError:
+            print(ValueError, KeyError)
 
-# In Progress
+# Good
 def edit_contact():
      
      try:
@@ -110,25 +113,51 @@ def delete_contact():
 
     except ValueError:
       print('A ValueError occurred')
+
 #Good
 def search_contacts():
-     identifier_phone = int(input("Enter the phone number for the contact you wish to locate. "))
-     if identifier_phone in contact_information:
-         for contact, info in contact_information.items():
-            print(f'\n Contact details for contact id: {identifier_phone}')
-            for key in info:
-                print( key.capitalize(), info[key], end="\n")
+     
+     try:
+        identifier_phone = int(input("Enter the phone number for the contact you wish to locate. "))
+
+        if identifier_phone in contact_information:
+            for contact, info in contact_information.items():
+                print(f'\n Contact details for contact id: {identifier_phone}')
+                for key in info:
+                    print( key.capitalize(), info[key], end="\n")
+
+     except KeyError:
+            print(KeyError)
+
 #Good
 def display_contacts():
+     
      for contact_id, info in contact_information.items():
         print("\n Contact ID:", contact_id)
         for key in info:
             print(key + ':', info[key])
      
-#Not Started
+#In Progress
 def export_contacts():
-     #send contacts to text file
-     pass
+
+    try:
+      
+        with open('contacts.txt', 'w') as file:
+     
+            for contact_id, info in contact_information.items():
+                file.write("\n Contact Id:")
+                file.write(f'\n {str(contact_id)}')
+
+                for key in info:
+                 file.write(f'\n {key} : {info[key]}')
+                 file.write("\n ________________________________")
+                 
+        file.close()
+        print(f'Contact information exported to {file}')
+    
+    except FileNotFoundError | ValueError:
+      print(f'An exception occurred : {ValueError}{FileNotFoundError}')            
+
 #Not Started
 def import_contacts():
      #read contacts from a text file
@@ -169,10 +198,10 @@ def contact_management():
                 display_contacts()
 
             elif selection == 6:
-                 pass
+                 export_contacts()
 
             elif selection == 7:
-                 pass
+                 import_contacts()
 
             elif selection == 8:
                 print("Thank you for using the contact management system today!")
